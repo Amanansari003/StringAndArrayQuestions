@@ -6,7 +6,7 @@ class Program
     {
         Console.WriteLine("App started!");
         Console.WriteLine("Enter the input string");
-        string inputString = Console.ReadLine();
+        string? inputString = Console.ReadLine();
 
         Questions questions = new Questions();
         questions.ReverseStringWithoutInbuild(inputString);
@@ -14,5 +14,13 @@ class Program
         questions.IsPalindromeString(inputString);
         questions.IsAnagramStringUsingSort(inputString, "nama");
         questions.RemoveDuplicateCharacters(inputString);
+        questions.RemoveDuplicateCharactersUsingLinq(inputString);
+        questions.FirstNonRepeatingCharacter(inputString);
+        questions.FirstNonRepeatingCharacterUsingLinq(inputString);
+        questions.CountVowelsAndConsonants(inputString);
+        questions.CountVowelsAndConsonantsUsingLinq(inputString);
+        questions.CountWordsInString(inputString);
+        questions.CountEachCharacterInString(inputString);
+        questions.CountEachCharacterInStringUsingLinq(inputString);
     }
 }

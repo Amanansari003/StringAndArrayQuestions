@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Questions_Programs
 {
@@ -42,6 +38,7 @@ namespace Questions_Programs
                     if (inputString[i] != inputString[^(i + 1)])
                     {
                         Console.WriteLine($"{inputString} is not a palindrome");
+                        return;
                     }
                 }
             }
@@ -80,28 +77,6 @@ namespace Questions_Programs
             Console.WriteLine(isAnagram ? $"{firstString} and {secondString} are anagrams." : $"{firstString} and {secondString} are not anagrams.");
         }
 
-        public void IsAnagram(string firstString, string secondString)
-        {
-            if (string.IsNullOrWhiteSpace(firstString) || string.IsNullOrWhiteSpace(secondString))
-            {
-                Console.WriteLine("One or both strings are null or empty.");
-                return;
-            }
-
-            Dictionary<char, int> firstCharCount = firstString.ToLower().GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
-            Dictionary<char, int> secondCharCount = secondString.ToLower().GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
-
-            foreach (var kvp in firstCharCount)
-            {
-                if (!secondCharCount.TryGetValue(kvp.Key, out int count) || count != kvp.Value)
-                {
-                    Console.WriteLine($"{firstString} and {secondString} are not anagrams.");
-                    return;
-                }
-            }
-            Console.WriteLine($"{firstString} and {secondString} are anagrams.");
-        }
-
         public void RemoveDuplicateCharacters(string inputString)
         {
             if (string.IsNullOrWhiteSpace(inputString))
@@ -134,6 +109,179 @@ namespace Questions_Programs
 
             var result = new string(inputString.Distinct().ToArray());
             Console.WriteLine($"String after removing duplicates using LINQ: {result}");
+        }
+
+        public void FirstNonRepeatingCharacter(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            Dictionary<char, int> charCount = inputString.GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
+            foreach (var c in inputString)
+            {
+                if (charCount[c] == 1)
+                {
+                    Console.WriteLine($"First non-repeating character is : {c}");
+                    return;
+                }
+            }
+        }
+
+        public void FirstNonRepeatingCharacterUsingLinq(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            var firstNonRepeating = inputString
+                .GroupBy(c => c)
+                .Where(g => g.Count() == 1)
+                .Select(g => g.Key)
+                .FirstOrDefault();
+
+            if (firstNonRepeating != default(char))
+            {
+                Console.WriteLine($"First non-repeating character using LINQ is : {firstNonRepeating}");
+            }
+            else
+            {
+                Console.WriteLine("No non-repeating character found.");
+            }
+        }
+
+        public void CountVowelsAndConsonants(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            int vowelCount = 0;
+            int consonantCount = 0;
+            char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };
+            foreach (char c in inputString)
+            {
+                if (char.IsLetter(c))
+                {
+                    if (vowels.Contains(c))
+                    {
+                        vowelCount++;
+                    }
+                    else
+                    {
+                        consonantCount++;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Vowels: {vowelCount}, Consonants: {consonantCount}");
+        }
+
+        public void CountVowelsAndConsonantsUsingLinq(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };
+            int vowelCount = inputString.Count(c => char.IsLetter(c) && vowels.Contains(c));
+            int consonantCount = inputString.Count(c => char.IsLetter(c) && !vowels.Contains(c));
+
+            Console.WriteLine($"Vowels: {vowelCount}, Consonants: {consonantCount}");
+        }
+
+        public void CountWordsInString(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            var words = inputString.Split(new[] { ' ', '\t', '\n', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            int wordCount = words.Length;
+            Console.WriteLine($"Number of words in the string: {wordCount}");
+        }
+
+        public void CountEachCharacterInString(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+            Dictionary<char, int> charCount = new Dictionary<char, int>();
+            foreach (char c in inputString)
+            {
+                if (char.IsLetter(c))
+                {
+                    if (charCount.ContainsKey(c))
+                    {
+                        charCount[c]++;
+                    }
+                    else
+                    {
+                        charCount[c] = 1;
+                    }
+                }
+            }
+
+            foreach (var kvp in charCount)
+            {
+                Console.WriteLine($"Character '{kvp.Key}' occurs {kvp.Value} times.");
+            }
+        }
+
+        public void CountEachCharacterInStringUsingLinq(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            var charCount = inputString
+                .Where(c => char.IsLetter(c))
+                .GroupBy(c => c)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            foreach (var kvp in charCount)
+            {
+                Console.WriteLine($"Character '{kvp.Key} occurs {kvp.Value} times.");
+            }
+        }
+
+        public void LongestSubstringWithoutRepeatingCharacters(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("Input string is null or empty.");
+                return;
+            }
+
+            int maxLength = 0;
+            int start = 0;
+            Dictionary<char, int> charIndexMap = new Dictionary<char, int>();
+
+            for (int i = 0; i < inputString.Length; i++)
+            {
+                if (charIndexMap.ContainsKey(inputString[i]) && charIndexMap[inputString[i]] >= start)
+                {
+                    start = charIndexMap[inputString[i]] + 1;
+                }
+                charIndexMap[inputString[i]] = i;
+                maxLength = Math.Max(maxLength, i - start + 1);
+            }
+
+            Console.WriteLine($"Length of the longest substring without repeating characters: {maxLength}");
         }
     }
 }
