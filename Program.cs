@@ -22,5 +22,6 @@ class Program
         questions.CountWordsInString(inputString);
         questions.CountEachCharacterInString(inputString);
         questions.CountEachCharacterInStringUsingLinq(inputString);
+        questions.ReverseWordInStringWithoutInbuildMethod(inputString);
     }
 }

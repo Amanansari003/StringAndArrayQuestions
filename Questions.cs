@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Questions_Programs
 {
@@ -282,6 +283,85 @@ namespace Questions_Programs
             }
 
             Console.WriteLine($"Length of the longest substring without repeating characters: {maxLength}");
+        }
+
+        public void ReplaceVowelsFromFirstToLast(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Console.WriteLine("input string is null or empty.");
+                return;
+            }
+
+            char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };
+            int firstVowelIndex = 0;
+            int lastVowelIndex = inputString.Length - 1;
+
+            while (firstVowelIndex < inputString.Length)
+            {
+                while (firstVowelIndex < inputString.Length && !vowels.Contains(inputString[firstVowelIndex]))
+                {
+                    firstVowelIndex++;
+                }
+
+                while (lastVowelIndex >= 0 && !vowels.Contains(inputString[lastVowelIndex]))
+                {
+                    lastVowelIndex--;
+                }
+                if (firstVowelIndex < lastVowelIndex)
+                {
+                    char temp = inputString[firstVowelIndex];
+                    inputString = inputString.Remove(firstVowelIndex, 1).Insert(firstVowelIndex, inputString[lastVowelIndex].ToString());
+                    inputString = inputString.Remove(lastVowelIndex, 1).Insert(lastVowelIndex, temp.ToString());
+                    firstVowelIndex++;
+                    lastVowelIndex--;
+                }
+                Print($"String after replacing vowels from first to last: {inputString}");
+            }
+
+
+        }
+
+        public void ReverseWordInStringWithoutInbuildMethod(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString))
+            {
+                Print("Input string is null or empty.");
+                return;
+            }
+
+            // Initialize StringBuilder for result and current word
+            string result = string.Empty;
+            string currentWord = string.Empty;
+            int stringLength = inputString.Length;
+            // Iterate through each character in the input string
+            for (int i = 0; i < stringLength; i++)
+            {
+                char currentChar = inputString[i];
+                // If the character is a space, append the current word to result and reset current word
+
+                if (currentChar == ' ')
+                {
+                    if (currentWord.Length > 0)
+                    {
+                        result = result + currentWord + " ";
+                        currentWord = string.Empty;
+                    }
+                }
+                else
+                {
+                    // If the character is not a space, add it to the current word
+                    currentWord = currentChar + currentWord; ;
+                }
+            }
+
+            Print($"Reversed words in string without using inbuilt methods: {result + currentWord}");
+        }
+
+
+        public void Print(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }
